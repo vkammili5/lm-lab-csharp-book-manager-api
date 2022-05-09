@@ -1,4 +1,4 @@
-# 📖 Minimalist Book Manager API - C# ASP.NET Core MVC API
+# 📖 Minimalist Book Manager API - C# ASP.NET Core MVC Web API
 
 ## Introduction
 This is the starter repository for the Further APIs session. It provides some starter code to creating a Minimalist Book Manager API with synchronous API endpoints.
@@ -8,7 +8,7 @@ This is the starter repository for the Further APIs session. It provides some st
 - NuGet
 
 ### Technologies & Dependencies
-- ASP.NET Core MVC (API Project)
+- ASP.NET Core MVC 6 (Web API Project)
 - NUnit testing framework
 - Moq
 

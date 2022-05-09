@@ -1,6 +1,4 @@
-﻿using System;
-using BookManagerApi.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using BookManagerApi.Models;
 
 namespace BookManagerApi.Services
 {
@@ -14,35 +12,35 @@ namespace BookManagerApi.Services
         }
 
 
-        public async Task<List<Book>> GetAllBooksAsync()
+        public List<Book> GetAllBooks()
         {
-            var books = await _context.Books.ToListAsync();
+            var books = _context.Books.ToList();
             return books;
         }
 
-        public async Task<Book> Create(Book book)
+        public Book Create(Book book)
         {
             _context.Add(book);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return book;
         }
 
-        public async Task<Book> Update(long id, Book book)
+        public Book Update(long id, Book book)
         {
-            var existingBookFound = await FindBookByIdAsync(id);
+            var existingBookFound = FindBookById(id);
 
             existingBookFound.Title = book.Title;
             existingBookFound.Description = book.Description;
             existingBookFound.Author = book.Author;
             existingBookFound.Genre = book.Genre;
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return book;
         }
 
-        public async Task<Book> FindBookByIdAsync(long id)
+        public Book FindBookById(long id)
         {
-            var book = await _context.Books.FindAsync(id);
+            var book = _context.Books.Find(id);
             return book;
         }
 

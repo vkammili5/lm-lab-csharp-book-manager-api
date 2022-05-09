@@ -17,34 +17,34 @@ namespace BookManagerApi.Controllers
 
         // GET: api/v1/book
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        public ActionResult<IEnumerable<Book>> GetBooks()
         {
-            return await _bookManagementService.GetAllBooksAsync();
+            return _bookManagementService.GetAllBooks();
         }
 
         // GET: api/v1/book/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBookById(long id)
+        public ActionResult<Book> GetBookById(long id)
         {
-            var book = await _bookManagementService.FindBookByIdAsync(id);
+            var book = _bookManagementService.FindBookById(id);
             return book;
         }
 
         // PUT: api/v1/book/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBookById(long id, Book book)
+        public IActionResult UpdateBookById(long id, Book book)
         {
-            await _bookManagementService.Update(id, book);
+            _bookManagementService.Update(id, book);
             return NoContent();
         }
 
         // POST: api/v1/book
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Book>> AddBook(Book book)
+        public ActionResult<Book> AddBook(Book book)
         {
-            await _bookManagementService.Create(book);
+            _bookManagementService.Create(book);
             return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
         }
     }

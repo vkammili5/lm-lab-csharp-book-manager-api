@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BookManagerApi.Controllers;
 using BookManagerApi.Models;
 using BookManagerApi.Services;
@@ -25,13 +24,13 @@ public class BookManagerControllerTests
     }
 
     [Test]
-    public async Task GetBooks_Returns_AllBooks()
+    public void GetBooks_Returns_AllBooks()
     {
         //Arange
-        _mockBookManagementService.Setup(b => b.GetAllBooksAsync()).Returns(Task.FromResult(GetTestBooks()));
+        _mockBookManagementService.Setup(b => b.GetAllBooks()).Returns(GetTestBooks());
 
         //Act
-        var result = await _controller.GetBooks();
+        var result = _controller.GetBooks();
 
         //Assert
         result.Should().BeOfType(typeof(ActionResult<IEnumerable<Book>>));
@@ -40,14 +39,14 @@ public class BookManagerControllerTests
     }
 
     [Test]
-    public async Task GetBookById_Returns_CorrectBook()
+    public void GetBookById_Returns_CorrectBook()
     {
         //Arrange
         var testBookFound = GetTestBooks().FirstOrDefault();
-        _mockBookManagementService.Setup(b => b.FindBookByIdAsync(1)).Returns(Task.FromResult(testBookFound));
+        _mockBookManagementService.Setup(b => b.FindBookById(1)).Returns(testBookFound);
 
         //Act
-        var result = await _controller.GetBookById(1);
+        var result = _controller.GetBookById(1);
 
         //Assert
         result.Should().BeOfType(typeof(ActionResult<Book>));
@@ -55,7 +54,7 @@ public class BookManagerControllerTests
     }
 
     [Test]
-    public async Task UpdateBookById_Updates_Correct_Book()
+    public void UpdateBookById_Updates_Correct_Book()
     {
         //Arrange
         long existingBookId = 3;
@@ -64,25 +63,25 @@ public class BookManagerControllerTests
 
         var bookUpdates = new Book() { Id = 3, Title = "Book Three", Description = "I am updating this for Book Three", Author = "Person Three", Genre = Genre.Education };
 
-        _mockBookManagementService.Setup(b => b.FindBookByIdAsync(existingBookId)).Returns(Task.FromResult(existingBookFound));
+        _mockBookManagementService.Setup(b => b.FindBookById(existingBookId)).Returns(existingBookFound);
 
         //Act
-        var result = await _controller.UpdateBookById(existingBookId, bookUpdates);
+        var result = _controller.UpdateBookById(existingBookId, bookUpdates);
 
         //Assert
         result.Should().BeOfType(typeof(NoContentResult));
     }
 
     [Test]
-    public async Task AddBook_Creates_A_Book()
+    public void AddBook_Creates_A_Book()
     {
         //Arrange
         var newBook = new Book() { Id = 4, Title = "Book Four", Description = "This is the description for Book Four", Author = "Person Four", Genre = Genre.Education };
 
-        _mockBookManagementService.Setup(b => b.Create(newBook)).Returns(Task.FromResult(newBook));
+        _mockBookManagementService.Setup(b => b.Create(newBook)).Returns(newBook);
 
         //Act
-        var result = await _controller.AddBook(newBook);
+        var result = _controller.AddBook(newBook);
 
         //Assert
         result.Should().BeOfType(typeof(ActionResult<Book>));
