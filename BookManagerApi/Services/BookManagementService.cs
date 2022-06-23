@@ -48,6 +48,14 @@ namespace BookManagerApi.Services
         {
             return _context.Books.Any(b => b.Id == id);
         }
+        
+        public void DeleteBook(long id)
+        {
+            var existingBookFound = FindBookById(id);
+            _context.Remove(existingBookFound);
+            _context.SaveChanges();
+        }
+
     }
 }
 
